@@ -1,7 +1,10 @@
 package com.ivangames.den
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
+import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -37,30 +40,22 @@ class FeedActivity : AppCompatActivity() {
         val etNewPost = findViewById<EditText>(R.id.etNewPost)
         val btnSendPost = findViewById<Button>(R.id.btnSendPost)
         val postsContainer = findViewById<LinearLayout>(R.id.postsContainer)
+        val storiesContainer = findViewById<LinearLayout>(R.id.storiesContainer)
 
         etNewPost.hint = "Что нового, $name?"
 
-        // Открытие меню
-        btnMenu.setOnClickListener {
-            drawerLayout.openDrawer(navView)
-        }
+        // Заполняем Истории (заглушки)
+        addStories(storiesContainer)
 
-        // Клики по пунктам меню
+        btnMenu.setOnClickListener { drawerLayout.openDrawer(navView) }
+
         navView.setNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_feed -> { }
-                R.id.nav_profile -> { }
-                R.id.nav_friends -> { }
-                R.id.nav_messages -> { }
-                R.id.nav_settings -> { }
-            }
             drawerLayout.closeDrawers()
             true
         }
 
         btnLogout.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 
@@ -72,6 +67,38 @@ class FeedActivity : AppCompatActivity() {
         }
 
         loadPosts(postsContainer)
+    }
+
+    // Рисуем кружочки историй
+    private fun addStories(container: LinearLayout) {
+        val names = listOf("Моя", "Анна", "Игорь", "Мария", "Олег")
+        for (i in names.indices) {
+            val storyLayout = LinearLayout(this)
+            storyLayout.orientation = LinearLayout.VERTICAL
+            storyLayout.gravity = Gravity.CENTER
+            storyLayout.setPadding(16, 0, 16, 0)
+
+            val avatar = TextView(this)
+            avatar.text = names[i].take(1) // Первая буква
+            avatar.setTextColor(Color.WHITE)
+            avatar.textSize = 24f
+            avatar.gravity = Gravity.CENTER
+            avatar.setBackgroundResource(R.drawable.avatar_bg)
+            val size = (56 * resources.displayMetrics.density).toInt()
+            avatar.layoutParams = LinearLayout.LayoutParams(size, size)
+            avatar.setTypeface(null, Typeface.BOLD)
+
+            val tvName = TextView(this)
+            tvName.text = names[i]
+            tvName.setTextColor(Color.WHITE)
+            tvName.textSize = 12f
+            tvName.gravity = Gravity.CENTER
+            tvName.setPadding(0, 8, 0, 0)
+
+            storyLayout.addView(avatar)
+            storyLayout.addView(tvName)
+            container.addView(storyLayout)
+        }
     }
 
     private fun loadPosts(container: LinearLayout) {
@@ -103,7 +130,7 @@ class FeedActivity : AppCompatActivity() {
                 runOnUiThread {
                     val tv = TextView(this)
                     tv.text = "Ошибка загрузки: ${e.message}"
-                    tv.setTextColor(0xFFFF0000.toInt())
+                    tv.setTextColor(Color.RED)
                     container.addView(tv)
                 }
             }
@@ -141,32 +168,73 @@ class FeedActivity : AppCompatActivity() {
         }
     }
 
+    // Рисуем красивую карточку поста
     private fun addPostToView(container: LinearLayout, post: JSONObject) {
-        val postLayout = LinearLayout(this)
-        postLayout.orientation = LinearLayout.VERTICAL
-        postLayout.setPadding(16, 16, 16, 16)
-        postLayout.setBackgroundColor(0xFF1E1E1E.toInt())
+        val card = LinearLayout(this)
+        card.orientation = LinearLayout.VERTICAL
+        card.setBackgroundResource(R.drawable.post_card_bg)
+        card.setPadding(24, 24, 24, 24)
         
         val params = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
-        params.setMargins(0, 0, 0, 16)
-        postLayout.layoutParams = params
+        params.setMargins(0, 0, 0, 24)
+        card.layoutParams = params
+
+        // Шапка карточки (Аватарка + Имя)
+        val header = LinearLayout(this)
+        header.orientation = LinearLayout.HORIZONTAL
+        header.gravity = Gravity.CENTER_VERTICAL
+
+        val avatar = TextView(this)
+        val authorName = post.getString("authorName")
+        avatar.text = authorName.take(1)
+        avatar.setTextColor(Color.WHITE)
+        avatar.textSize = 16f
+        avatar.gravity = Gravity.CENTER
+        avatar.setBackgroundResource(R.drawable.avatar_bg)
+        val size = (40 * resources.displayMetrics.density).toInt()
+        avatar.layoutParams = LinearLayout.LayoutParams(size, size)
+        avatar.setTypeface(null, Typeface.BOLD)
 
         val tvAuthor = TextView(this)
-        tvAuthor.text = "${post.getString("authorName")} (@${post.getString("authorUsername")})"
-        tvAuthor.setTextColor(0xFF4CAF50.toInt())
+        tvAuthor.text = "$authorName\n@${post.getString("authorUsername")}"
+        tvAuthor.setTextColor(Color.WHITE)
         tvAuthor.textSize = 14f
+        tvAuthor.setPadding(16, 0, 0, 0)
+        tvAuthor.setTypeface(null, Typeface.BOLD)
 
+        header.addView(avatar)
+        header.addView(tvAuthor)
+
+        // Текст поста
         val tvText = TextView(this)
         tvText.text = post.getString("text")
-        tvText.setTextColor(0xFFFFFFFF.toInt())
+        tvText.setTextColor(0xFFE0E0E0.toInt())
         tvText.textSize = 16f
-        tvText.setPadding(0, 8, 0, 0)
+        tvText.setPadding(0, 16, 0, 16)
 
-        postLayout.addView(tvAuthor)
-        postLayout.addView(tvText)
-        container.addView(postLayout)
+        // Кнопки (Лайк, Комментарий)
+        val actions = LinearLayout(this)
+        actions.orientation = LinearLayout.HORIZONTAL
+        
+        val btnLike = TextView(this)
+        btnLike.text = "♡ Нравится"
+        btnLike.setTextColor(0xFFAAAAAA.toInt())
+        btnLike.setPadding(0, 0, 24, 0)
+
+        val btnComment = TextView(this)
+        btnComment.text = "💬 Комментарии"
+        btnComment.setTextColor(0xFFAAAAAA.toInt())
+
+        actions.addView(btnLike)
+        actions.addView(btnComment)
+
+        card.addView(header)
+        card.addView(tvText)
+        card.addView(actions)
+        
+        container.addView(card)
     }
 }
