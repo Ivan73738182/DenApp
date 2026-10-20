@@ -19,36 +19,36 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val etEmail = findViewById<EditText>(R.id.etEmail)
+        val etUsername = findViewById<EditText>(R.id.etUsername)
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val btnRegister = findViewById<Button>(R.id.btnRegister)
         val tvStatus = findViewById<TextView>(R.id.tvStatus)
 
         btnLogin.setOnClickListener {
-            val email = etEmail.text.toString().trim()
+            val name = etUsername.text.toString().trim()
             val pass = etPassword.text.toString().trim()
-            if (email.isEmpty() || pass.isEmpty()) {
+            if (name.isEmpty() || pass.isEmpty()) {
                 tvStatus.text = "Заполни все поля!"
                 return@setOnClickListener
             }
             tvStatus.text = "Отправляю на сервер..."
-            sendRequest("/api/login", email, pass, tvStatus)
+            sendRequest("/api/login", name, pass, tvStatus)
         }
 
         btnRegister.setOnClickListener {
-            val email = etEmail.text.toString().trim()
+            val name = etUsername.text.toString().trim()
             val pass = etPassword.text.toString().trim()
-            if (email.isEmpty() || pass.isEmpty()) {
+            if (name.isEmpty() || pass.isEmpty()) {
                 tvStatus.text = "Заполни все поля!"
                 return@setOnClickListener
             }
             tvStatus.text = "Регистрирую..."
-            sendRequest("/api/register", email, pass, tvStatus)
+            sendRequest("/api/register", name, pass, tvStatus)
         }
     }
 
-    private fun sendRequest(endpoint: String, email: String, password: String, tvStatus: TextView) {
+    private fun sendRequest(endpoint: String, username: String, password: String, tvStatus: TextView) {
         thread {
             try {
                 val url = URL(serverUrl + endpoint)
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                 conn.doOutput = true
 
                 val jsonBody = JSONObject()
-                jsonBody.put("email", email)
+                jsonBody.put("username", username)
                 jsonBody.put("password", password)
 
                 val os = OutputStreamWriter(conn.outputStream)
