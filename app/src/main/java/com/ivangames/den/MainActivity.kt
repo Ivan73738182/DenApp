@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val etName = findViewById<EditText>(R.id.etName)
         val etUsername = findViewById<EditText>(R.id.etUsername)
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
@@ -26,29 +27,30 @@ class MainActivity : AppCompatActivity() {
         val tvStatus = findViewById<TextView>(R.id.tvStatus)
 
         btnLogin.setOnClickListener {
-            val name = etUsername.text.toString().trim()
+            val username = etUsername.text.toString().trim()
             val pass = etPassword.text.toString().trim()
-            if (name.isEmpty() || pass.isEmpty()) {
-                tvStatus.text = "Заполни все поля!"
+            if (username.isEmpty() || pass.isEmpty()) {
+                tvStatus.text = "Для входа нужны юз и пароль!"
                 return@setOnClickListener
             }
-            tvStatus.text = "Отправляю на сервер..."
-            sendRequest("/api/login", name, pass, tvStatus)
+            tvStatus.text = "Вхожу..."
+            sendRequest("/api/login", "", username, pass, tvStatus)
         }
 
         btnRegister.setOnClickListener {
-            val name = etUsername.text.toString().trim()
+            val name = etName.text.toString().trim()
+            val username = etUsername.text.toString().trim()
             val pass = etPassword.text.toString().trim()
-            if (name.isEmpty() || pass.isEmpty()) {
-                tvStatus.text = "Заполни все поля!"
+            if (name.isEmpty() || username.isEmpty() || pass.isEmpty()) {
+                tvStatus.text = "Заполни все поля для регистрации!"
                 return@setOnClickListener
             }
             tvStatus.text = "Регистрирую..."
-            sendRequest("/api/register", name, pass, tvStatus)
+            sendRequest("/api/register", name, username, pass, tvStatus)
         }
     }
 
-    private fun sendRequest(endpoint: String, username: String, password: String, tvStatus: TextView) {
+    private fun sendRequest(endpoint: String, name: String, username: String, password: String, tvStatus: TextView) {
         thread {
             try {
                 val url = URL(serverUrl + endpoint)
@@ -58,6 +60,7 @@ class MainActivity : AppCompatActivity() {
                 conn.doOutput = true
 
                 val jsonBody = JSONObject()
+                if (name.isNotEmpty()) jsonBody.put("name", name)
                 jsonBody.put("username", username)
                 jsonBody.put("password", password)
 
