@@ -47,7 +47,16 @@ class FeedActivity : AppCompatActivity() {
         addStories(storiesContainer)
         btnMenu.setOnClickListener { drawerLayout.openDrawer(navView) }
 
+        // Обработка нажатий в боковом меню
         navView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_profile -> {
+                    val intent = Intent(this, ProfileActivity::class.java)
+                    intent.putExtra("name", name)
+                    intent.putExtra("username", username)
+                    startActivity(intent)
+                }
+            }
             drawerLayout.closeDrawers()
             true
         }
@@ -75,7 +84,6 @@ class FeedActivity : AppCompatActivity() {
             storyLayout.gravity = Gravity.CENTER
             storyLayout.setPadding(16, 0, 16, 0)
 
-            // Круглая аватарка
             val avatar = TextView(this)
             avatar.text = if (i == 0) "Моя" else names[i].take(1)
             avatar.setTextColor(Color.WHITE)
@@ -86,7 +94,6 @@ class FeedActivity : AppCompatActivity() {
             avatar.layoutParams = LinearLayout.LayoutParams(size, size)
             avatar.setTypeface(null, Typeface.BOLD)
 
-            // Если это "Моя", меняем фон на серый, как на макете
             if (i == 0) {
                 avatar.setBackgroundColor(Color.parseColor("#E0E0E0"))
                 avatar.setTextColor(Color.parseColor("#2196F3"))

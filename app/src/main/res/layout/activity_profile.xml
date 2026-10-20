@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <!-- Кнопка Назад -->
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="← Назад"
+            android:backgroundTint="@android:color/transparent"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="start"/>
+
+        <!-- Большая круглая аватарка -->
+        <TextView
+            android:id="@+id/tvBigAvatar"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:text="D"
+            android:textColor="#FFFFFF"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="@drawable/avatar_bg"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Имя -->
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Имя"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <!-- Ник -->
+        <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@username"
+            android:textColor="#AAAAAA"
+            android:textSize="16sp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Кнопки -->
+        <Button
+            android:id="@+id/btnEditProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Редактировать профиль"
+            android:backgroundTint="#3B82F6"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="12dp"/>
+
+        <Button
+            android:id="@+id/btnLogoutProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Выйти из аккаунта"
+            android:backgroundTint="#333333"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
+</ScrollView>
