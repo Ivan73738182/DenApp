@@ -11,7 +11,7 @@
         android:padding="24dp"
         android:gravity="center_horizontal">
 
-        <!-- Кнопка Назад -->
+        <!-- Кнопка Назад (теперь прозрачная) -->
         <Button
             android:id="@+id/btnBack"
             android:layout_width="wrap_content"
