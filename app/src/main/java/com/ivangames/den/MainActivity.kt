@@ -1,5 +1,6 @@
 package com.ivangames.den
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             val username = etUsername.text.toString().trim()
             val pass = etPassword.text.toString().trim()
             if (name.isEmpty() || username.isEmpty() || pass.isEmpty()) {
-                tvStatus.text = "Заполни все поля для регистрации!"
+                tvStatus.text = "Заполни все поля!"
                 return@setOnClickListener
             }
             tvStatus.text = "Регистрирую..."
@@ -75,7 +76,22 @@ class MainActivity : AppCompatActivity() {
 
                 runOnUiThread {
                     if (responseCode in 200..299) {
-                        tvStatus.text = "Успех! Ответ: $response"
+                        try {
+                            val json = JSONObject(response)
+                            val token = json.getString("token")
+                            val serverName = json.getString("name")
+                            val serverUsername = json.getString("username")
+
+                            // Переключаемся на Ленту
+                            val intent = Intent(this@MainActivity, FeedActivity::class.java)
+                            intent.putExtra("token", token)
+                            intent.putExtra("name", serverName)
+                            intent.putExtra("username", serverUsername)
+                            startActivity(intent)
+                            finish()
+                        } catch (e: Exception) {
+                            tvStatus.text = "Ошибка перехода: ${e.message}"
+                        }
                     } else {
                         tvStatus.text = "Ошибка ($responseCode): $response"
                     }
