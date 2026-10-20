@@ -1,6 +1,7 @@
 package com.ivangames.den
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -15,9 +16,21 @@ import kotlin.concurrent.thread
 class MainActivity : AppCompatActivity() {
 
     private val serverUrl = "https://den-8d9h.onrender.com"
+    private lateinit var prefs: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        prefs = getSharedPreferences("den_prefs", MODE_PRIVATE)
+        
+        // Проверяем, есть ли сохраненный токен
+        val savedToken = prefs.getString("token", null)
+        if (savedToken != null) {
+            // Если токен есть, сразу идем в ленту
+            goToFeed(savedToken, prefs.getString("name", "") ?: "", prefs.getString("username", "") ?: "")
+            return
+        }
+
         setContentView(R.layout.activity_main)
 
         val etName = findViewById<EditText>(R.id.etName)
@@ -76,22 +89,19 @@ class MainActivity : AppCompatActivity() {
 
                 runOnUiThread {
                     if (responseCode in 200..299) {
-                        try {
-                            val json = JSONObject(response)
-                            val token = json.getString("token")
-                            val serverName = json.getString("name")
-                            val serverUsername = json.getString("username")
+                        val json = JSONObject(response)
+                        val token = json.getString("token")
+                        val serverName = json.getString("name")
+                        val serverUsername = json.getString("username")
 
-                            // Переключаемся на Ленту
-                            val intent = Intent(this@MainActivity, FeedActivity::class.java)
-                            intent.putExtra("token", token)
-                            intent.putExtra("name", serverName)
-                            intent.putExtra("username", serverUsername)
-                            startActivity(intent)
-                            finish()
-                        } catch (e: Exception) {
-                            tvStatus.text = "Ошибка перехода: ${e.message}"
-                        }
+                        // СОХРАНЯЕМ В ПАМЯТЬ
+                        prefs.edit()
+                            .putString("token", token)
+                            .putString("name", serverName)
+                            .putString("username", serverUsername)
+                            .apply()
+
+                        goToFeed(token, serverName, serverUsername)
                     } else {
                         tvStatus.text = "Ошибка ($responseCode): $response"
                     }
@@ -103,5 +113,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun goToFeed(token: String, name: String, username: String) {
+        val intent = Intent(this, FeedActivity::class.java)
+        intent.putExtra("token", token)
+        intent.putExtra("name", name)
+        intent.putExtra("username", username)
+        startActivity(intent)
+        finish()
     }
 }

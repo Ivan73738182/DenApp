@@ -59,10 +59,12 @@ class FeedActivity : AppCompatActivity() {
             true
         }
 
-        btnLogout.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }
+btnLogout.setOnClickListener {
+    // Очищаем память при выходе
+    getSharedPreferences("den_prefs", MODE_PRIVATE).edit().clear().apply()
+    startActivity(Intent(this, MainActivity::class.java))
+    finish()
+}
 
         btnSendPost.setOnClickListener {
             val text = etNewPost.text.toString().trim()
