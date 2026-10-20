@@ -10,16 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#121212">
+        android:background="#F5F5F5">
 
-        <!-- Шапка -->
+        <!-- Шапка (Светлая) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:background="#1E1E1E">
+            android:background="#FFFFFF"
+            android:elevation="4dp">
 
             <Button
                 android:id="@+id/btnMenu"
@@ -28,24 +29,34 @@
                 android:text="☰"
                 android:textSize="20sp"
                 android:backgroundTint="@android:color/transparent"
-                android:textColor="#FFFFFF"/>
+                android:textColor="#000000"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Den."
-                android:textColor="#4CAF50"
-                android:textSize="24sp"
+                android:text="Den"
+                android:textColor="#2196F3"
+                android:textSize="26sp"
                 android:textStyle="bold"
                 android:paddingStart="16dp"/>
+
+            <!-- Кнопка уведомлений -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🔔"
+                android:textSize="20sp"
+                android:paddingEnd="16dp"/>
 
             <Button
                 android:id="@+id/btnLogout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Выйти"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                android:backgroundTint="#E0E0E0"
+                android:textColor="#000000"/>
         </LinearLayout>
 
         <!-- Блок Историй -->
@@ -53,19 +64,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Истории"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold"
             android:paddingStart="16dp"
-            android:paddingTop="16dp"/>
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:background="#FFFFFF"/>
 
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:paddingTop="8dp"
             android:paddingBottom="16dp"
+            android:background="#FFFFFF"
             android:scrollbars="none">
 
             <LinearLayout
@@ -73,7 +86,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <!-- Заглушки историй (создадим в коде) -->
                 <LinearLayout
                     android:id="@+id/storiesContainer"
                     android:layout_width="wrap_content"
@@ -88,7 +100,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="16dp"
-            android:background="#1E1E1E">
+            android:background="#FFFFFF"
+            android:layout_marginTop="8dp">
 
             <EditText
                 android:id="@+id/etNewPost"
@@ -97,14 +110,15 @@
                 android:layout_weight="1"
                 android:hint="Что нового?"
                 android:textColorHint="#888888"
-                android:textColor="#FFFFFF"
-                android:backgroundTint="#FFFFFF"/>
+                android:textColor="#000000"
+                android:backgroundTint="#2196F3"/>
 
             <Button
                 android:id="@+id/btnSendPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Отправить"/>
+                android:text="Отправить"
+                android:backgroundTint="#2196F3"/>
         </LinearLayout>
 
         <!-- Список постов -->
@@ -128,7 +142,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/drawer_menu"
-        app:itemTextColor="#FFFFFF"
-        app:itemIconTint="#FFFFFF"
-        android:background="#1E1E1E"/>
+        app:itemTextColor="#000000"
+        app:itemIconTint="#000000"
+        android:background="#FFFFFF"/>
 </androidx.drawerlayout.widget.DrawerLayout>

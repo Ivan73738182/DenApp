@@ -44,9 +44,7 @@ class FeedActivity : AppCompatActivity() {
 
         etNewPost.hint = "Что нового, $name?"
 
-        // Заполняем Истории (заглушки)
         addStories(storiesContainer)
-
         btnMenu.setOnClickListener { drawerLayout.openDrawer(navView) }
 
         navView.setNavigationItemSelectedListener { item ->
@@ -69,7 +67,6 @@ class FeedActivity : AppCompatActivity() {
         loadPosts(postsContainer)
     }
 
-    // Рисуем кружочки историй
     private fun addStories(container: LinearLayout) {
         val names = listOf("Моя", "Анна", "Игорь", "Мария", "Олег")
         for (i in names.indices) {
@@ -78,19 +75,27 @@ class FeedActivity : AppCompatActivity() {
             storyLayout.gravity = Gravity.CENTER
             storyLayout.setPadding(16, 0, 16, 0)
 
+            // Круглая аватарка
             val avatar = TextView(this)
-            avatar.text = names[i].take(1) // Первая буква
+            avatar.text = if (i == 0) "Моя" else names[i].take(1)
             avatar.setTextColor(Color.WHITE)
-            avatar.textSize = 24f
+            avatar.textSize = if (i == 0) 14f else 24f
             avatar.gravity = Gravity.CENTER
             avatar.setBackgroundResource(R.drawable.avatar_bg)
-            val size = (56 * resources.displayMetrics.density).toInt()
+            val size = (60 * resources.displayMetrics.density).toInt()
             avatar.layoutParams = LinearLayout.LayoutParams(size, size)
             avatar.setTypeface(null, Typeface.BOLD)
 
+            // Если это "Моя", меняем фон на серый, как на макете
+            if (i == 0) {
+                avatar.setBackgroundColor(Color.parseColor("#E0E0E0"))
+                avatar.setTextColor(Color.parseColor("#2196F3"))
+                avatar.text = "+\nМоя"
+            }
+
             val tvName = TextView(this)
             tvName.text = names[i]
-            tvName.setTextColor(Color.WHITE)
+            tvName.setTextColor(Color.BLACK)
             tvName.textSize = 12f
             tvName.gravity = Gravity.CENTER
             tvName.setPadding(0, 8, 0, 0)
@@ -117,7 +122,7 @@ class FeedActivity : AppCompatActivity() {
                     if (postsArray.length() == 0) {
                         val tv = TextView(this)
                         tv.text = "Пока нет постов. Напиши первый!"
-                        tv.setTextColor(0xFF888888.toInt())
+                        tv.setTextColor(Color.GRAY)
                         container.addView(tv)
                     } else {
                         for (i in 0 until postsArray.length()) {
@@ -168,7 +173,6 @@ class FeedActivity : AppCompatActivity() {
         }
     }
 
-    // Рисуем красивую карточку поста
     private fun addPostToView(container: LinearLayout, post: JSONObject) {
         val card = LinearLayout(this)
         card.orientation = LinearLayout.VERTICAL
@@ -179,10 +183,9 @@ class FeedActivity : AppCompatActivity() {
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
-        params.setMargins(0, 0, 0, 24)
+        params.setMargins(0, 0, 0, 16)
         card.layoutParams = params
 
-        // Шапка карточки (Аватарка + Имя)
         val header = LinearLayout(this)
         header.orientation = LinearLayout.HORIZONTAL
         header.gravity = Gravity.CENTER_VERTICAL
@@ -200,7 +203,7 @@ class FeedActivity : AppCompatActivity() {
 
         val tvAuthor = TextView(this)
         tvAuthor.text = "$authorName\n@${post.getString("authorUsername")}"
-        tvAuthor.setTextColor(Color.WHITE)
+        tvAuthor.setTextColor(Color.BLACK)
         tvAuthor.textSize = 14f
         tvAuthor.setPadding(16, 0, 0, 0)
         tvAuthor.setTypeface(null, Typeface.BOLD)
@@ -208,25 +211,23 @@ class FeedActivity : AppCompatActivity() {
         header.addView(avatar)
         header.addView(tvAuthor)
 
-        // Текст поста
         val tvText = TextView(this)
         tvText.text = post.getString("text")
-        tvText.setTextColor(0xFFE0E0E0.toInt())
+        tvText.setTextColor(Color.BLACK)
         tvText.textSize = 16f
         tvText.setPadding(0, 16, 0, 16)
 
-        // Кнопки (Лайк, Комментарий)
         val actions = LinearLayout(this)
         actions.orientation = LinearLayout.HORIZONTAL
         
         val btnLike = TextView(this)
         btnLike.text = "♡ Нравится"
-        btnLike.setTextColor(0xFFAAAAAA.toInt())
+        btnLike.setTextColor(Color.GRAY)
         btnLike.setPadding(0, 0, 24, 0)
 
         val btnComment = TextView(this)
         btnComment.text = "💬 Комментарии"
-        btnComment.setTextColor(0xFFAAAAAA.toInt())
+        btnComment.setTextColor(Color.GRAY)
 
         actions.addView(btnLike)
         actions.addView(btnComment)
