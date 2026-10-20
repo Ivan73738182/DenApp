@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Крестики</string>
+    <string name="change_mode">СМЕНИТЬ РЕЖИМ</string>
+    <string name="computer">Компьютер</string>
+    <string name="draw_message">Ничья!</string>
+    <string name="enter_names">ВВЕДИТЕ ИМЕНА ИГРОКОВ</string>
+    <string name="menu_about">О приложении</string>
+    <string name="menu_other_apps">Другие приложения</string>
+    <string name="menu_share">Поделиться игрой</string>
+    <string name="mode_two_players">На двоих</string>
+    <string name="mode_vs_computer">С компьютером</string>
+    <string name="new_game">НОВАЯ ИГРА</string>
+    <string name="play_again">ИГРАТЬ СНОВА</string>
+    <string name="player_o_default">Игрок O</string>
+    <string name="player_o_hint">Имя игрока O</string>
+    <string name="player_x_default">Игрок X</string>
+    <string name="player_x_hint">Имя игрока X</string>
+    <string name="start_game">НАЧАТЬ ИГРУ</string>
+    <string name="title">Крестики-нолики</string>
+    <string name="win_message">Победил(а) %1$s!</string>
+    <style name="CellButton">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:textSize">44sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="backgroundTint">#212121</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+    </style>
+    <style name="Theme.TicTacToe" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#2196F3</item>
+        <item name="colorPrimaryVariant">#1976D2</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="android:statusBarColor">#121212</item>
+        <item name="android:windowBackground">#121212</item>
+    </style>
+</resources>

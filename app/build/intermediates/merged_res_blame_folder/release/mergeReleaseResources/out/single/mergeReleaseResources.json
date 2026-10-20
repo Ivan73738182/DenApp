@@ -1,0 +1,66 @@
+[
+    {
+        "merged": "com.example.tictactoe.app-release-31:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.example.tictactoe.app-main-32:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.example.tictactoe.app-release-31:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "com.example.tictactoe.app-main-32:/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.example.tictactoe.app-release-31:/layout_activity_computer_setup.xml.flat",
+        "source": "com.example.tictactoe.app-main-32:/layout/activity_computer_setup.xml"
+    },
+    {
+        "merged": "com.example.tictactoe.app-release-31:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "com.example.tictactoe.app-main-32:/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.example.tictactoe.app-release-31:/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "com.example.tictactoe.app-main-32:/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.example.tictactoe.app-release-31:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.example.tictactoe.app-main-32:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.example.tictactoe.app-release-31:/layout_dialog_mode.xml.flat",
+        "source": "com.example.tictactoe.app-main-32:/layout/dialog_mode.xml"
+    },
+    {
+        "merged": "com.example.tictactoe.app-release-31:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "com.example.tictactoe.app-main-32:/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.example.tictactoe.app-release-31:/layout_dialog_win.xml.flat",
+        "source": "com.example.tictactoe.app-main-32:/layout/dialog_win.xml"
+    },
+    {
+        "merged": "com.example.tictactoe.app-release-31:/layout_activity_enter_name.xml.flat",
+        "source": "com.example.tictactoe.app-main-32:/layout/activity_enter_name.xml"
+    },
+    {
+        "merged": "com.example.tictactoe.app-release-31:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.example.tictactoe.app-main-32:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.example.tictactoe.app-release-31:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "com.example.tictactoe.app-main-32:/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.example.tictactoe.app-release-31:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.example.tictactoe.app-main-32:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.example.tictactoe.app-release-31:/layout_activity_main.xml.flat",
+        "source": "com.example.tictactoe.app-main-32:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.example.tictactoe.app-release-31:/layout_activity_names.xml.flat",
+        "source": "com.example.tictactoe.app-main-32:/layout/activity_names.xml"
+    },
+    {
+        "merged": "com.example.tictactoe.app-release-31:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.example.tictactoe.app-main-32:/mipmap-hdpi/ic_launcher.png"
+    }
+]
