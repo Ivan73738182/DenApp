@@ -45,11 +45,13 @@ class ProfileActivity : AppCompatActivity() {
         tvBigAvatar.setOnClickListener { openGallery() }
         btnEditProfile.setOnClickListener { openGallery() }
 
-        btnLogoutProfile.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finish()
-        }
+btnLogoutProfile.setOnClickListener {
+    // Очищаем память
+    getSharedPreferences("den_prefs", MODE_PRIVATE).edit().clear().apply()
+    val intent = Intent(this, MainActivity::class.java)
+    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    startActivity(intent)
+    finish()
+}
     }
 }
