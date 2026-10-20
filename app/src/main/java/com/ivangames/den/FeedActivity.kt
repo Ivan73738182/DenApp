@@ -43,11 +43,9 @@ class FeedActivity : AppCompatActivity() {
         val storiesContainer = findViewById<LinearLayout>(R.id.storiesContainer)
 
         etNewPost.hint = "Что нового, $name?"
-
         addStories(storiesContainer)
         btnMenu.setOnClickListener { drawerLayout.openDrawer(navView) }
 
-        // Обработка нажатий в боковом меню
         navView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_profile -> {
@@ -227,10 +225,44 @@ class FeedActivity : AppCompatActivity() {
         val actions = LinearLayout(this)
         actions.orientation = LinearLayout.HORIZONTAL
         
+        // Кнопка лайка
         val btnLike = TextView(this)
-        btnLike.text = "♡ Нравится"
-        btnLike.setTextColor(Color.GRAY)
+        val postId = post.getLong("id")
+        val likesArray = post.getJSONArray("likes")
+        var likesCount = likesArray.length()
+        
+        var isLiked = false
+        for (i in 0 until likesArray.length()) {
+            if (likesArray.getString(i) == username) {
+                isLiked = true
+                break
+            }
+        }
+
+        btnLike.text = if (isLiked) "❤️ $likesCount" else "♡ $likesCount"
+        btnLike.setTextColor(if (isLiked) Color.RED else Color.GRAY)
         btnLike.setPadding(0, 0, 24, 0)
+
+        btnLike.setOnClickListener {
+            thread {
+                try {
+                    val url = URL("$serverUrl/api/posts/$postId/like")
+                    val conn = url.openConnection() as HttpURLConnection
+                    conn.requestMethod = "POST"
+                    conn.setRequestProperty("Authorization", "Bearer $token")
+                    conn.doOutput = true
+                    conn.outputStream.close()
+
+                    if (conn.responseCode in 200..299) {
+                        runOnUiThread {
+                            loadPosts(findViewById(R.id.postsContainer))
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
 
         val btnComment = TextView(this)
         btnComment.text = "💬 Комментарии"

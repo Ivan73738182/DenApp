@@ -11,7 +11,6 @@
         android:padding="24dp"
         android:gravity="center_horizontal">
 
-        <!-- Кнопка Назад (теперь прозрачная) -->
         <Button
             android:id="@+id/btnBack"
             android:layout_width="wrap_content"
@@ -21,21 +20,34 @@
             android:textColor="#FFFFFF"
             android:layout_gravity="start"/>
 
-        <!-- Большая круглая аватарка -->
-        <TextView
-            android:id="@+id/tvBigAvatar"
+        <FrameLayout
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:text="D"
-            android:textColor="#FFFFFF"
-            android:textSize="48sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:background="@drawable/avatar_bg"
             android:layout_marginTop="24dp"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp">
 
-        <!-- Имя -->
+            <TextView
+                android:id="@+id/tvBigAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="D"
+                android:textColor="#FFFFFF"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/avatar_bg"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✎"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:background="#333333"
+                android:padding="6dp"
+                android:layout_gravity="bottom|end"/>
+        </FrameLayout>
+
         <TextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
@@ -46,7 +58,6 @@
             android:textStyle="bold"
             android:layout_marginBottom="4dp"/>
 
-        <!-- Ник -->
         <TextView
             android:id="@+id/tvUsername"
             android:layout_width="wrap_content"
@@ -56,12 +67,11 @@
             android:textSize="16sp"
             android:layout_marginBottom="24dp"/>
 
-        <!-- Кнопки -->
         <Button
             android:id="@+id/btnEditProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Редактировать профиль"
+            android:text="Сменить аватарку"
             android:backgroundTint="#3B82F6"
             android:textColor="#FFFFFF"
             android:layout_marginBottom="12dp"/>
